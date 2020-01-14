@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -9,7 +10,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 public class BaseRobot extends OpMode {
 
     public DcMotor leftBackDriveMotor, rightBackDriveMotor, leftFrontDriveMotor, rightFrontDriveMotor, armLiftMotor, armLiftMotor2, armClampMotor;
-    // public Servo armRight_servo, armLeft_servo;
+    public Servo platformMove_servo;
     public ColorSensor colorBlock, flashLight;
     public ElapsedTime timer = new ElapsedTime();
     //Created by Chun on 1/26/19 for 10023. Adapted by Team 13981.
@@ -26,14 +27,7 @@ public class BaseRobot extends OpMode {
         armClampMotor = hardwareMap.get(DcMotor.class, "armClampMotor");
         colorBlock = hardwareMap.get(ColorSensor.class, "colorSensorBlock");
         flashLight = hardwareMap.get(ColorSensor.class, "flashLightBlock");
-
-        /*armRight_servo = hardwareMap.get(Servo.class, "armRight_servo");
-        armLeft_servo = hardwareMap.get(Servo.class, "armLeft_servo");*/
-
-        /*set_armRight_servo(ConstantVariables.K_ARMRIGHT_SERVO_OPEN);
-        set_armLeft_servo(ConstantVariables.K_ARMLEFT_SERVO_OPEN);*/
-
-
+        platformMove_servo = hardwareMap.get(Servo.class,"platformMove_Servo");
     }
 
 
@@ -45,7 +39,6 @@ public class BaseRobot extends OpMode {
         reset_armLiftMotor2_encoders();
         colorBlock.enableLed(true);
         flashLight.enableLed(true);
-
     }
 
     public void stop() {
@@ -66,12 +59,6 @@ public class BaseRobot extends OpMode {
         telemetry.addData("D04 Arm Lift Motor Enc: ", get_armLiftMotor_enc());
         telemetry.addData("D05 Arm Lift Motor 2 Enc: ", get_armLiftMotor2_enc());
         telemetry.addData("D010 Arm Clamp Motor Enc: ", get_armClampMotor_enc());
-
-        telemetry.addData("D011 Color Sensor Block Red", colorBlock.red());
-        telemetry.addData("D011 Color Sensor Block Blue", colorBlock.blue());
-        telemetry.addData("D011 Color Sensor Block Green", colorBlock.green());
-        /*telemetry.addData("D08 Arm Right Servo Pos: ", armRight_servo.getPosition());
-        telemetry.addData("D09 Arm Left Servo Pos: ", armLeft_servo.getPosition());*/
 
     }
 
@@ -191,7 +178,7 @@ public class BaseRobot extends OpMode {
         rightBackDriveMotor.setPower(rightBackPower);
     }
 
-    public void tank_drive(double leftPwr, double rightPwr) {
+    /*public void tank_drive(double leftPwr, double rightPwr) {
         double leftPower = Range.clip(leftPwr, -1.0, 1.0);
         double rightPower = Range.clip(rightPwr, -1.0, 1.0);
 
@@ -200,16 +187,11 @@ public class BaseRobot extends OpMode {
         rightFrontDriveMotor.setPower(-rightPower);
         rightBackDriveMotor.setPower(-rightPower);
     }
-
-    /*public void set_armRight_servo(double pos) {
+*/
+    public void set_platformMove_servo(double pos) {
         double position = Range.clip(pos, 0, 1.0);
-        armRight_servo.setPosition(position);
+        platformMove_servo.setPosition(position);
     }
-
-    public void set_armLeft_servo(double pos) {
-        double position = Range.clip(pos, 0, 1.0);
-        armLeft_servo.setPosition(position);
-    }*/
 
     public void reset_drive_encoders() {
         leftFrontDriveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

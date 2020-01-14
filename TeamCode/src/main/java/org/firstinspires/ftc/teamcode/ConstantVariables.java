@@ -6,7 +6,8 @@ package org.firstinspires.ftc.teamcode;
 
 public class ConstantVariables {
 
-
+    public static final int K_PLATFORMMOVE_SERVO_FOLDED = 1;
+    public static final int K_PLATFORMMOVE_SERVO_GRAB = 0;
 
     public static final int K_PPR_DRIVE = 1120;
     public static final double K_DRIVE_WHEEL_DIA = 4;
