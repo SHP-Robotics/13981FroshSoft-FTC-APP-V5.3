@@ -50,17 +50,27 @@ public class OurTeleOp extends BaseRobot {
             setArmLiftMotor2(0);
         }
 
-        //Servo Motor
-        if (gamepad1.left_bumper) {
+        //Servo Motors for platform
+        if (gamepad1.guide) {
 
-            set_platformMove_servo(ConstantVariables.K_PLATFORMMOVE_SERVO_FOLDED);
-
+            set_platformMove_servo(0);
+        }
+        else{
+            set_platformMove_servo(1);
         }
 
-        else if (gamepad1.right_bumper) {
-            set_platformMove_servo(ConstantVariables.K_PLATFORMMOVE_SERVO_GRAB);
+
+
+        if (gamepad1.back) {
+
+            set_platformMoveRight_servo(1);
+        }
+        else {
+            set_platformMoveRight_servo(0);
         }
 
+
+        //Clamp Motor
         if (gamepad1.left_bumper) {
             setArmClampMotor(-1);
         } else if (gamepad1.right_bumper) {

@@ -87,7 +87,9 @@ public class LeftBlocksAutonomous extends BaseRobot {
             case 0:
                 if (auto_drive(1, 27)) {
                     reset_drive_encoders();
+
                     stage++;
+
                 }
                 break;
 
@@ -156,6 +158,7 @@ public class LeftBlocksAutonomous extends BaseRobot {
                     default:
                         break;
                 }
+
     }
 }
 //move sideways and scan

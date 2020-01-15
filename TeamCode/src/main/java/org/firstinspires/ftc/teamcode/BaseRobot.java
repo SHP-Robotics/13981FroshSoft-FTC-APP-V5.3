@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -10,7 +11,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 public class BaseRobot extends OpMode {
 
     public DcMotor leftBackDriveMotor, rightBackDriveMotor, leftFrontDriveMotor, rightFrontDriveMotor, armLiftMotor, armLiftMotor2, armClampMotor;
-    public Servo platformMove_servo;
+    public Servo platformMove_servo, platformMoveRight_servo;
     public ColorSensor colorBlock, flashLight;
     public ElapsedTime timer = new ElapsedTime();
     //Created by Chun on 1/26/19 for 10023. Adapted by Team 13981.
@@ -28,6 +29,7 @@ public class BaseRobot extends OpMode {
         colorBlock = hardwareMap.get(ColorSensor.class, "colorSensorBlock");
         flashLight = hardwareMap.get(ColorSensor.class, "flashLightBlock");
         platformMove_servo = hardwareMap.get(Servo.class,"platformMove_Servo");
+        platformMoveRight_servo= hardwareMap.get(Servo.class,"platformMoveRight_Servo");
     }
 
 
@@ -142,10 +144,10 @@ public class BaseRobot extends OpMode {
         double TARGET_ENC = ConstantVariables.K_PPIN_DRIVE * inches;
         telemetry.addData("Target_enc: ", TARGET_ENC);
 
-        double leftFrontPower = Range.clip(0 - power, -1.0, 1.0);
-        double leftBackPower = Range.clip(0 + power, -1.0, 1.0);
-        double rightFrontPower = Range.clip(0 - power, -1.0, 1.0);
-        double rightBackPower = Range.clip(0 + power, -1.0, 1.0);
+        double leftFrontPower = Range.clip(0 - power, -1.0, 1);
+        double leftBackPower = Range.clip(0 + power, -1.0, 1);
+        double rightFrontPower = Range.clip(0 - power, -1.0, 0.8);
+        double rightBackPower = Range.clip(0 + power, -1.0, 0.8);
 
         leftFrontDriveMotor.setPower(leftFrontPower);
         leftBackDriveMotor.setPower(leftBackPower);
@@ -167,8 +169,8 @@ public class BaseRobot extends OpMode {
     public void tankanum_drive(double rightPwr, double leftPwr, double lateralpwr) {
         rightPwr *= -1;
 
-        double leftFrontPower = Range.clip(leftPwr - lateralpwr, -1.0, 1.0);
-        double leftBackPower = Range.clip(leftPwr + lateralpwr, -1.0, 1.0);
+        double leftFrontPower = Range.clip(leftPwr - lateralpwr, -1.0, 0.7);
+        double leftBackPower = Range.clip(leftPwr + lateralpwr, -1.0, 0.7);
         double rightFrontPower = Range.clip(rightPwr - lateralpwr, -1.0, 1.0);
         double rightBackPower = Range.clip(rightPwr + lateralpwr, -1.0, 1.0);
 
@@ -192,6 +194,12 @@ public class BaseRobot extends OpMode {
         double position = Range.clip(pos, 0, 1.0);
         platformMove_servo.setPosition(position);
     }
+
+    public void set_platformMoveRight_servo(double pos) {
+        double position = Range.clip(pos, 0, 1.0);
+        platformMoveRight_servo.setPosition(position);
+    }
+
 
     public void reset_drive_encoders() {
         leftFrontDriveMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -267,6 +275,8 @@ public class BaseRobot extends OpMode {
         armClampMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         armClampMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
+
 }
 
 
