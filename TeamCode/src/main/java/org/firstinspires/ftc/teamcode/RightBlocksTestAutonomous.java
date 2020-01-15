@@ -62,7 +62,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 */
 @Autonomous
 
-public class RightBlocksAutonomous extends BaseRobot {
+public class RightBlocksTestAutonomous extends BaseRobot {
     private int stage = 0;
 
 
@@ -94,24 +94,25 @@ public class RightBlocksAutonomous extends BaseRobot {
                     reset_drive_encoders();
                     stage++;
                 }
-                else auto_mecanum(0.3, 47);
+                else auto_mecanum(0.2, 47);
 
                 break;
 
             case 2:
-                if (auto_mecanum(0.3, 2)) {
+                if (auto_mecanum(0.2, 2)) {
                     reset_drive_encoders();
                     stage++;
                 }
-            break;
+                break;
+
             case 3:
                 // adjust the robot to the block
                 timer.reset();
                 if (auto_drive(0.2, 1)) {
-                        setArmClampMotor(1);
-                        reset_drive_encoders();
-                        timer.reset();
-                        stage++;
+                    setArmClampMotor(1);
+                    reset_drive_encoders();
+                    timer.reset();
+                    stage++;
                 }
                 break;
 
@@ -125,7 +126,7 @@ public class RightBlocksAutonomous extends BaseRobot {
                 break;
 
             case 5:
-                if (auto_turn(-0.5, 70)) {
+                if (auto_turn(-0.5, 90)) {
                     reset_drive_encoders();
                     stage++;
                 }
@@ -142,7 +143,7 @@ public class RightBlocksAutonomous extends BaseRobot {
 
             case 7:
                 if (timer.seconds() > 2) {
-                    if (auto_drive(-1, 15)) {
+                    if (auto_drive(-1, 80)) {
                         setArmClampMotor(0);
                         reset_drive_encoders();
                         reset_armClampMotor_encoders();
@@ -152,6 +153,29 @@ public class RightBlocksAutonomous extends BaseRobot {
                     }
                 }
                 break;
+
+            case 8:
+                if (auto_turn(0.5, 90)) {
+                    if (auto_drive(0.5, 10)) {
+                        reset_drive_encoders();
+                        stage++;
+                    }
+                }
+                break;
+
+            case 9:
+                if (checkBlackColor(colorBlock.red(), colorBlock.blue())) {
+                    stage++;
+                } else auto_mecanum(0.2, 47);
+                break;
+
+            case 10:
+                if (auto_mecanum(0.2, 2)) {
+                    stage++;
+                }
+                break;
+
+            case 11:
 
 
             /*case 7:
