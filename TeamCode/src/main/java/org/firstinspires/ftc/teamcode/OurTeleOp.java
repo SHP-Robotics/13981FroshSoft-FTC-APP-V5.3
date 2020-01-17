@@ -42,31 +42,22 @@ public class OurTeleOp extends BaseRobot {
         }
 
         // second rack and pinion
-        if (gamepad1.dpad_left || gamepad1.x) {
+        if (gamepad1.x) {
             setArmLiftMotor2(1);
-        } else if (gamepad1.dpad_right || gamepad1.y) {
+        } else if (gamepad1.y) {
             setArmLiftMotor2(-1);
         } else {
             setArmLiftMotor2(0);
         }
 
         //Servo Motors for platform
-        if (gamepad1.guide) {
-
-            set_platformMove_servo(0);
-        }
-        else{
-            set_platformMove_servo(1);
-        }
-
-
-
-        if (gamepad1.back) {
-
-            set_platformMoveRight_servo(1);
-        }
-        else {
+        if (gamepad1.dpad_left) {
             set_platformMoveRight_servo(0);
+            set_platformMoveLeft_servo(1);
+        }
+        else if (gamepad1.dpad_right) {
+            set_platformMoveRight_servo(1);
+            set_platformMoveLeft_servo(0);
         }
 
 

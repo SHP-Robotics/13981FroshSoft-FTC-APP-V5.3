@@ -87,7 +87,6 @@ public class LeftBlocksAutonomous extends BaseRobot {
             case 0:
                 if (auto_drive(1, 27)) {
                     reset_drive_encoders();
-
                     stage++;
 
                 }
@@ -101,6 +100,7 @@ public class LeftBlocksAutonomous extends BaseRobot {
                 else auto_mecanum(-0.3, 46);
 
                 break;
+
             case 2:
                 if (auto_mecanum(-0.3, 3)) {
                     reset_drive_encoders();
@@ -109,7 +109,7 @@ public class LeftBlocksAutonomous extends BaseRobot {
 
             case 3:
                 // adjust the robot to the block
-                timer.reset();
+
                 if (auto_drive(0.2, 2)) {
                     setArmClampMotor(1);
                     reset_drive_encoders();
@@ -119,7 +119,7 @@ public class LeftBlocksAutonomous extends BaseRobot {
                 break;
 
             case 4:
-                if (timer.seconds() > 1) {
+                if (timer.seconds() >= 1) {
                     if (auto_drive(-0.4, 8)) {
                         reset_drive_encoders();
                         stage++;
