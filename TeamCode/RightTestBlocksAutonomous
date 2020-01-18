@@ -1,0 +1,150 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+
+
+// Template created by Chun on 1/26/19 for 10023. Made by Team 13981 on 10/11/19
+
+@Autonomous
+
+public class RightTestBlocksAutonomous extends BaseRobot {
+    private int stage = 0;
+
+    @Override
+    public void init() {
+        super.init();
+    }
+
+    @Override
+    public void start() {
+        super.start();
+    }
+
+    @Override
+    public void loop() {
+        super.loop();
+        switch (stage) {
+
+            // Drive forward from the corner and stop
+            case 0:
+                if (auto_drive(1, 28)) {
+                    reset_drive_encoders();
+                    stage++;
+
+                }
+                break;
+
+            case 1:
+                if (checkBlackColor(colorBlock.red(), colorBlock.blue())) {
+                    reset_drive_encoders();
+                    stage++;
+                }
+                else auto_mecanum(0.2, 46);
+
+                break;
+
+            case 2:
+                if (auto_mecanum(0.3, 3)) {
+                    reset_drive_encoders();
+                    stage++;
+                }
+
+            case 3:
+                // adjust the robot to the block
+
+                if (auto_drive(0.3, 2)) {
+                    setArmClampMotor(1);
+                    reset_drive_encoders();
+                    timer.reset();
+                    stage++;
+                }
+                break;
+
+            case 4:
+                if (timer.seconds() >= 0.2) {
+                    if (auto_drive(-0.5, 9)) {
+                        reset_drive_encoders();
+                        stage++;
+                    }
+                }
+                break;
+
+            case 5:
+                if (auto_turn(-1, 90)) {
+                    reset_drive_encoders();
+                    stage++;
+                }
+                break;
+
+            case 6:
+                if (auto_drive(1, 48)) {
+                    setArmClampMotor(-1);
+                    reset_drive_encoders();
+                    timer.reset();
+                    stage++;
+                }
+                break;
+
+            case 7:
+                if (timer.seconds() > 1) {
+                    if (auto_drive(-1, 68)) {
+                        setArmClampMotor(0);
+                        reset_drive_encoders();
+                        timer.reset();
+                        stage++;
+                    }
+                }
+                break;
+            case 8:
+                if (auto_turn(1, 65)) {
+                    reset_drive_encoders();
+                    timer.reset();
+                    stage++;
+                }
+             break;
+            case 9:
+                if(timer.seconds() > 0.5) {
+                    if (auto_drive(1, 26)) {
+                        setArmClampMotor(1);
+                        reset_drive_encoders();
+                        timer.reset();
+                        stage++;
+                    }
+                }
+                break;
+            case 10:
+                if(timer.seconds() >1) {
+                    if (auto_drive(-0.9, 27)) {
+                        reset_drive_encoders();
+                        timer.reset();
+                        stage++;
+                    }
+                }
+                break;
+            case 11:
+                if (auto_turn(-1, 75)) {
+                    reset_drive_encoders();
+                    timer.reset();
+                    stage++;
+                }
+                break;
+            case 12:
+                if(auto_drive(1,60)){
+                setArmClampMotor(-1);
+                reset_drive_encoders();
+                reset_armClampMotor_encoders();
+                reset_armLftMotor_encoders();
+                reset_armLiftMotor2_encoders();
+                stage++;
+                }
+                break;
+            case 13: if(auto_drive(-1,14))    {
+                reset_drive_encoders();
+                stage++;
+            }
+                    default:
+                        break;
+                }
+
+    }
+}
