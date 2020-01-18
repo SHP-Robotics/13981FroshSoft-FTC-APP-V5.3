@@ -32,8 +32,9 @@ public class LeftLoadingZoneAutonomous extends BaseRobot {
                     }
             break;
             case 1 :
-                    if (auto_drive(0.6, 33)) {
-                        setArmClampMotor(1);
+                    if (auto_drive(1, 33)) {
+                        set_platformMoveLeft_servo(0);
+                        set_platformMoveRight_servo(1);
                         reset_drive_encoders();
                         timer.reset();
                         stage++;
@@ -43,8 +44,9 @@ public class LeftLoadingZoneAutonomous extends BaseRobot {
 
             case 2:
                 if (timer.seconds() > 1) {
-                    if (auto_drive(-0.6, 31)) {
-                        setArmClampMotor(-1);
+                    if (auto_drive(-1, 31)) {
+                        set_platformMoveLeft_servo(1);
+                        set_platformMoveRight_servo(0);
                         reset_drive_encoders();
                         timer.reset();
                         stage++;
@@ -53,7 +55,7 @@ public class LeftLoadingZoneAutonomous extends BaseRobot {
                 break;
 
             case 3:
-                if (timer.seconds() > 3) {
+                if (timer.seconds() > 1) {
                     if (auto_mecanum(-0.5, 60)) {
                         setArmClampMotor(0);
                         reset_drive_encoders();
