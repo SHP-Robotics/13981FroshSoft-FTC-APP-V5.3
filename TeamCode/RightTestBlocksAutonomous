@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous
 
-public class RightTestBlocksAutonomous extends BaseRobot {
+public class  RightTestBlocksAutonomous extends BaseRobot {
     private int stage = 0;
 
     @Override
@@ -25,24 +25,24 @@ public class RightTestBlocksAutonomous extends BaseRobot {
         super.loop();
         switch (stage) {
 
-            // Drive forward from the corner and stop
+            // Drive forward to row of blocks
+
             case 0:
                 if (auto_drive(1, 28)) {
                     reset_drive_encoders();
                     stage++;
-
                 }
                 break;
-
+            //mecanum until robot sees black
             case 1:
                 if (checkBlackColor(colorBlock.red(), colorBlock.blue())) {
                     reset_drive_encoders();
                     stage++;
                 }
-                else auto_mecanum(0.2, 46);
+                else auto_mecanum(0.3, 46);
 
                 break;
-
+            //mecanum to center robot
             case 2:
                 if (auto_mecanum(0.3, 3)) {
                     reset_drive_encoders();
@@ -50,32 +50,32 @@ public class RightTestBlocksAutonomous extends BaseRobot {
                 }
 
             case 3:
-                // adjust the robot to the block
+                // adjust the robot to the block by moving forward and grab block
 
-                if (auto_drive(0.3, 2)) {
+                if (auto_drive(0.2, 2)) {
                     setArmClampMotor(1);
                     reset_drive_encoders();
                     timer.reset();
                     stage++;
                 }
                 break;
-
+            //backup
             case 4:
                 if (timer.seconds() >= 0.2) {
-                    if (auto_drive(-0.5, 9)) {
+                    if (auto_drive(-0.4, 9)) {
                         reset_drive_encoders();
                         stage++;
                     }
                 }
                 break;
-
+            //turn to face other side of field
             case 5:
                 if (auto_turn(-1, 90)) {
                     reset_drive_encoders();
                     stage++;
                 }
                 break;
-
+            //drive accross bridge and drop block
             case 6:
                 if (auto_drive(1, 48)) {
                     setArmClampMotor(-1);
@@ -84,10 +84,10 @@ public class RightTestBlocksAutonomous extends BaseRobot {
                     stage++;
                 }
                 break;
-
+            //fold arm motor and backup to other side of field to get 2nd block
             case 7:
                 if (timer.seconds() > 1) {
-                    if (auto_drive(-1, 68)) {
+                    if (auto_drive(-1, 69)) {
                         setArmClampMotor(0);
                         reset_drive_encoders();
                         timer.reset();
@@ -95,13 +95,15 @@ public class RightTestBlocksAutonomous extends BaseRobot {
                     }
                 }
                 break;
+            //turn to face blocks
             case 8:
-                if (auto_turn(1, 65)) {
+                if (auto_turn(1, 70)) {
                     reset_drive_encoders();
                     timer.reset();
                     stage++;
                 }
-             break;
+                break;
+            //go forward towards second block and grab it
             case 9:
                 if(timer.seconds() > 0.5) {
                     if (auto_drive(1, 26)) {
@@ -112,6 +114,7 @@ public class RightTestBlocksAutonomous extends BaseRobot {
                     }
                 }
                 break;
+            //backup
             case 10:
                 if(timer.seconds() >1) {
                     if (auto_drive(-0.9, 27)) {
@@ -121,30 +124,30 @@ public class RightTestBlocksAutonomous extends BaseRobot {
                     }
                 }
                 break;
+            //face bridge
             case 11:
-                if (auto_turn(-1, 75)) {
+                if (auto_turn(-1, 135)) {
                     reset_drive_encoders();
                     timer.reset();
                     stage++;
                 }
                 break;
+            //drive accross and drop block
             case 12:
                 if(auto_drive(1,60)){
-                setArmClampMotor(-1);
-                reset_drive_encoders();
-                reset_armClampMotor_encoders();
-                reset_armLftMotor_encoders();
-                reset_armLiftMotor2_encoders();
-                stage++;
+                    setArmClampMotor(-1);
+                    reset_drive_encoders();
+                    stage++;
                 }
                 break;
-            case 13: if(auto_drive(-1,14))    {
+            //park under bridge
+            case 13: if(auto_drive(-1,12))    {
                 reset_drive_encoders();
                 stage++;
             }
-                    default:
-                        break;
-                }
+            default:
+                break;
+        }
 
     }
 }
